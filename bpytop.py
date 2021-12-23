@@ -41,11 +41,7 @@ except Exception as e: errors.append(f'{e}')
 
 SELF_START = time()
 
-SYSTEM: str
-if "linux" in sys.platform: SYSTEM = "Linux"
-elif "bsd" in sys.platform: SYSTEM = "BSD"
-elif "darwin" in sys.platform: SYSTEM = "MacOS"
-else: SYSTEM = "Other"
+SYSTEM: str = os if (os := sys.platform) in ['Linux', 'BSD', 'MacOS'] else "Other"
 
 if errors:
 	print("ERROR!")
@@ -58,12 +54,12 @@ if errors:
 
 VERSION: str = "1.0.67"
 
-#? Argument parser ------------------------------------------------------------------------------->
+# ? Argument parser ------------------------------------------------------------------------------->
 args = argparse.ArgumentParser()
-args.add_argument("-b", "--boxes",		action="store",	dest="boxes", 	help = "which boxes to show at start, example: -b \"cpu mem net proc gpu\"")
-args.add_argument("-lc", "--low-color", action="store_true", 			help = "disable truecolor, converts 24-bit colors to 256-color")
-args.add_argument("-v", "--version",	action="store_true", 			help = "show version info and exit")
-args.add_argument("--debug",			action="store_true", 			help = "start with loglevel set to DEBUG overriding value set in config")
+args.add_argument("-b", "--boxes", action="store", dest="boxes", help="which boxes to show at start, example: -b \"cpu mem net proc gpu\"")
+args.add_argument("-lc", "--low-color", action="store_true", help= "disable truecolor, converts 24-bit colors to 256-color")
+args.add_argument("-v", "--version", action="store_true", help="show version info and exit")
+args.add_argument("--debug", action="store_true", help= "start with loglevel set to DEBUG overriding value set in config")
 stdargs = args.parse_args()
 
 if stdargs.version:
